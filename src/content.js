@@ -19,7 +19,7 @@ const clickConnectButtons = () => {
         } else {
             clearInterval(intervalId); // Stop if done or not connecting
         }
-    }, 2000); // 2-second delay
+    }, 5000); // 5-second delay
 };
 
 // Function to stop connecting
@@ -39,4 +39,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.action === "stopConnecting") {
         stopConnecting(); // Stop connecting
     }
+    sendResponse({ status: "Message recieved"})
 });

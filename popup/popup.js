@@ -10,6 +10,16 @@ document.getElementById('connectButton').addEventListener('click', () => {
 
     // Send a message to the content script to start or stop connecting
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id, { action: isConnecting ? "connectAll" : "stopConnecting" });
+        if(tabs.length === 0){
+            console.log("No active tab found");
+            return;
+        }
+        chrome.tabs.sendMessage(tabs[0].id, { action: isConnecting ? "connectAll" : "stopConnecting" }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.error('Error sending message:', chrome.runtime.lastError.message);
+            } else {
+                console.log('Message sent successfully', response);
+            }
+        });
     });
 });
